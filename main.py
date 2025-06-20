@@ -13,7 +13,9 @@ SYMBOLS = ['DOGE/USDT', 'TRX/USDT', 'SHIB/USDT', 'AAVE/USDT', 'LINK/USDT',
            'ADA/USDT', 'BTC/USDT', 'SOL/USDT', 'XRP/USDT', 'ETH/USDT', 'LDO/USDT']
 TIMEFRAMES = ['15m', '30m', '1h', '4h', '1d']
 
-exchange = ccxt.binance()
+exchange = ccxt.bingx({
+    'enableRateLimit': True
+})
 
 def fetch_and_check(symbol, timeframe):
     try:
