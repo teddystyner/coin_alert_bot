@@ -17,6 +17,10 @@ exchange = ccxt.bingx({
     'enableRateLimit': True
 })
 
+# 환경변수에서 CHAT_ID 가져오기 (쉼표로 구분된 여러 ID 처리)
+chat_ids_raw = os.environ.get("CHAT_ID", "")
+chat_ids = [int(chat_id.strip()) for chat_id in chat_ids_raw.split(",") if chat_id.strip()]
+
 def fetch_and_check(symbol, timeframe):
     try:
         ohlcv = exchange.fetch_ohlcv(symbol, timeframe, limit=50)
@@ -45,7 +49,8 @@ def fetch_and_check(symbol, timeframe):
 
 def send_alert(time_str, symbol, tf, condition, rsi):
     msg = f"[{time_str}] {symbol} ({tf})\n{condition}, RSI{round(rsi, 2)}"
-    bot.send_message(chat_id=CHAT_ID, text=msg)
+    for chat_id in chat_ids:
+        bot.send_message(chat_id=chat_id, text=msg)
     print(msg)
 
 def check_all():
