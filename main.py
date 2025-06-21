@@ -42,9 +42,9 @@ def fetch_and_check(symbol, timeframe):
         ema50 = latest['ema50']
         now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
 
-        if price > upper and rsi >= 65:
+        if price > upper and rsi >= 75:
             send_alert(now, symbol, timeframe, '볼린저밴드 상단 돌파 + RSI≥75 + 가격<EMA50', rsi, price, ema50)
-        elif price < lower and rsi <= 35:
+        elif price < lower and rsi <= 25:
             send_alert(now, symbol, timeframe, '볼린저밴드 하단 돌파 + RSI≤25 + 가격>EMA50', rsi, price, ema50)
 
     except Exception as e:
